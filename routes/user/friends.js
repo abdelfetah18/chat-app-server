@@ -63,8 +63,8 @@ friends.get("/invite/:user_id",async function (req,res,next){
             if(is_exist.length == 0){
                 var doc = {
                     _type:'friends',
-                    inviter_id:{ _type:'refrence', _ref:data.user_id },
-                    user_id:{ _type:'refrence', _ref:user_id },
+                    inviter_id:{ _type:'reference', _ref:data.user_id },
+                    user_id:{ _type:'reference', _ref:user_id },
                     state:'request'
                 }
                 addData(doc).then((friend_request) => {
