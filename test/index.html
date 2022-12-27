@@ -1,0 +1,34 @@
+<html>
+    <head></head>
+    <body>
+        <h1>WebSocket</h1>
+        <script>
+ 
+            var ws = new WebSocket('ws://127.0.0.1:4000/');
+            ws.emit = function (eventName,payload){
+                ws.send(JSON.stringify({ eventName,payload }));
+            }
+
+            ws.onopen = (e) => {
+                ws.emit("user",{ username:"tres" })
+            }
+            ws.onmessage = (event) => {
+                var { eventName,payload } = JSON.parse(event.data);
+                ws.dispatchEvent(new CustomEvent(eventName,{
+                    detail:payload
+                }));
+            }
+
+            ws.addEventListener("user",({ detail:data}) => {
+                console.log("user:",data)
+                ws.emit("test",{ username:"f" })
+            })
+
+            ws.addEventListener("newMessage",({ detail:data }) => {
+                console.log("newMessage:",data);
+            })
+
+            
+        </script>
+    </body>
+</html>
